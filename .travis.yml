@@ -1,0 +1,30 @@
+language: r
+sudo: false
+r:
+  - release
+cache: packages
+r_packages:
+  - shiny
+  - magrittr
+  - ggplot2
+  - openssl
+  - XML
+  - plotly
+  - shinydashboard
+  - emdbook
+  - testthat
+addons:
+  apt:
+    packages:
+      - r-cran-xml
+      - libcurl4-gnutls-dev
+      - libxml2-dev
+      - openssl
+      - gdebi-core
+      - jq
+      - libpq-dev
+      - libmariadb-client-lgpl-dev
+      - libcairo2-dev
+      - r-cran-slam
+script:
+  - Rscript -e "invisible(source_dir('./',env=globalenv()));testthat::test_dir('tests')"
