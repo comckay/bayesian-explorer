@@ -21,5 +21,7 @@ addons:
       - libxml2-dev
       - openssl
       - gdebi-core
+before_script:
+  - cd tests/
 script:
-  - Rscript -e "testthat::test_dir('./bayesian-explorer/tests')"
+  - Rscript -e "testthat::test_dir('.')"
