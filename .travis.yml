@@ -13,7 +13,6 @@ r_packages:
    - shinydashboard
    - emdbook
    - testthat
-   - covr
 addons:
   apt:
     packages:
@@ -26,6 +25,3 @@ before_script:
   - cd tests/
 script:
   - Rscript -e "testthat::test_dir('.')"
-
-after_success:
-  - Rscript -e 'library(covr); codecov()'
