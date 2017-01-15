@@ -9,7 +9,7 @@ shinyServer(function(input, output) {
     alpha = input$prior.mean * input$prior.n
     beta = (1 - input$prior.mean) * input$prior.n
     domain = seq(0, 1, 0.005)
-    val = dbeta(domain, alpha, beta) 
+    val = dbeta(domain, alpha, beta)
     data.frame("domain" = domain, 
                "prob_dens" = val)
   })
@@ -98,11 +98,18 @@ shinyServer(function(input, output) {
   })
   
   output$posterior.credint <- renderValueBox({
-    credint = credint()
-    valueBox(value = paste(credint[1], "-", credint[2]),
-             subtitle = "95% Credible Interval", 
-             icon = icon("thumbs-up", lib = "glyphicon"), 
-             color = "black") 
+    if (input$generative.n <= 3 & input$prior.n <= 3) {
+      valueBox(value = "NA",
+               subtitle = "95% Credible Interval", 
+               icon = icon("thumbs-up", lib = "glyphicon"), 
+               color = "black") 
+    } else {
+      credint = credint()
+      valueBox(value = paste(credint[1], "-", credint[2]),
+               subtitle = "95% Credible Interval", 
+               icon = icon("thumbs-up", lib = "glyphicon"), 
+               color = "black")  
+    }
   })
   
   output$sample.mean <- renderValueBox({
@@ -116,14 +123,23 @@ shinyServer(function(input, output) {
   output$beta.plot <- renderPlot({
     if (input$prior_posterior == "Prior") {
       prior = prior()
-      credint = credint()
       plot(prior, type = "l")
       abline(v = input$prior.mean, col = "black", lty = 3)
-      abline(v = credint[1], col = "blue", lty = 3)
-      abline(v = credint[2], col = "blue", lty = 3) 
-      legend("right", c("Prior", "Sample Mean", "95% Credible Int"), 
-             col = c("black", "black", "blue"), 
-             lty = c(1, 3, 3))
+      legend("right", c("Prior", "Sample Mean"), 
+             col = c("black", "black"), 
+             lty = c(1, 3))
+    } else if (input$generative.n <= 3 & input$prior.n <= 3) {
+      posterior = posterior()
+      posterior.mean = posterior.mean()
+      sample.mean = sample.mean()
+      prior = prior()
+      plot(posterior, type = "l")
+      lines(prior, col = "green", lty = 3)
+      abline(v = posterior.mean, col = "black", lty = 3)
+      abline(v = sample.mean, col = "grey60", lty = 3)
+      legend("right", c("Posterior", "Prior", "Posterior - Mean", "Sample Mean"), 
+             col = c("black", "green", "black", "grey60"), 
+             lty = c(1, 3, 3, 3))
     } else {
       posterior = posterior()
       posterior.mean = posterior.mean()

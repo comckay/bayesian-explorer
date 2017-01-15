@@ -28,13 +28,17 @@ betaPosterior <- function(prior.mean, prior.n, sample.n = "", affirm.n = "") {
   #   sample.n = n observations in the treatment population
   #   affirm.n = n successes in treatment population
   # Returns: a data frame which approximates the posterior distribution 
-  a = affirm.n + (prior.n * prior.mean) - 1
-  b = sample.n - affirm.n + (prior.n * (1 - prior.mean)) - 1
+  
+  if (sample.n < affirm.n) {  # if sample.n is less than n affirming
+    stop("sample.n < affirm.n")
+  }
+  a = abs(affirm.n + (prior.n * prior.mean) - 1)
+  b = abs(sample.n - affirm.n + (prior.n * (1 - prior.mean)) - 1)
   domain = seq(0, 1, 0.005)
   val = dbeta(domain, a, b)
   data.frame("domain" = domain, 
              "prob_dens" = val
-  )
+    )
 }
 
 betaPosteriorMean <- function(prior.mean, prior.n, sample.n = "", affirm.n = "") {

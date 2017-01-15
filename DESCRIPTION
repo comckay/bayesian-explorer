@@ -16,3 +16,4 @@ Imports:
   shinydashboard,
   emdbook,
   testthat
+LazyData: true
