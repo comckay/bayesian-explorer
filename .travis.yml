@@ -3,8 +3,7 @@ sudo: required
 r:
   - release
 cache: packages
-install:
- r_packages:
+r_packages:
    - shiny
    - magrittr
    - ggplot2
@@ -14,13 +13,13 @@ install:
    - shinydashboard
    - emdbook
    - testthat
- addons:
-   apt:
-     packages:
-       - r-cran-xml
-       - libcurl4-gnutls-dev
-       - libxml2-dev
-       - openssl
-       - gdebi-core
+addons:
+  apt:
+    packages:
+      - r-cran-xml
+      - libcurl4-gnutls-dev
+      - libxml2-dev
+      - openssl
+      - gdebi-core
 script:
   - Rscript -e "testthat::test_dir('tests')"
