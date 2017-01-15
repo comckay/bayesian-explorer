@@ -1,5 +1,5 @@
 language: r
-sudo: false
+sudo: required
 r:
   - release
 cache: packages
@@ -22,4 +22,4 @@ addons:
       - openssl
       - gdebi-core
 script:
-  - Rscript -e "invisible(source_dir('./',env=globalenv()));testthat::test_dir('tests')"
+  - Rscript -e "testthat::test_dir('tests')"
