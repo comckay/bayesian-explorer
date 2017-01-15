@@ -21,8 +21,5 @@ addons:
       - libxml2-dev
       - openssl
       - gdebi-core
-      - jq
-      - libpq-dev
-      - libmariadb-client-lgpl-dev
 script:
   - Rscript -e "invisible(source_dir('./',env=globalenv()));testthat::test_dir('tests')"
