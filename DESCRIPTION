@@ -1,0 +1,18 @@
+Package: bayesian-explorer
+Title: Bayesian Explorer
+Version: 0.1
+Authors@R: person("Connor", "McKay", email = "mckayconnort@gmail.com",
+                  role = c("aut", "cre"))
+Description: Shiny app to demonstrate bayesian inference using binomial likelihood and beta prior
+Depends: R (>= 3.1.0)
+License: magrittr
+Imports:
+  shiny,
+  magrittr,
+  ggplot2,
+  openssl,
+  XML,
+  plotly,
+  shinydashboard,
+  emdbook,
+  testthat
