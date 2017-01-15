@@ -44,6 +44,7 @@ declare -a packages=('shiny'
                      'XML'
                      'plotly'
                      'shinydashboard'
+                     'emdbook'
                      )
 
 for package_name in "${packages[@]}"; do
@@ -53,7 +54,6 @@ done
 # restart the server
 sudo systemctl restart shiny-server
 
-sudo mkdir /srv/shiny-server/bayesian-explorer
 sudo mkdir /srv/shiny-server/bayesian-explorer
 
 # move the dashboard to the shiny-server directory
