@@ -24,7 +24,5 @@ addons:
       - jq
       - libpq-dev
       - libmariadb-client-lgpl-dev
-      - libcairo2-dev
-      - r-cran-slam
 script:
   - Rscript -e "invisible(source_dir('./',env=globalenv()));testthat::test_dir('tests')"
