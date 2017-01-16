@@ -1,5 +1,7 @@
 language: r
 sudo: required
+git:
+  depth: 3
 r:
   - release
 cache: packages
@@ -25,8 +27,8 @@ addons:
 before_script:
   - cd tests/
 script:
-  - Rscript -e "testthat::test_dir('.')"
-
+  - Rscript -e "testthat::test_file('test_funcs.R')"
+  - echo $
 after_success:
   - cd ..
   - Rscript -e 'covr::codecov()'
