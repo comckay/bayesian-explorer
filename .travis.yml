@@ -27,8 +27,8 @@ addons:
 before_script:
   - cd tests/
 script:
-  - Rscript -e "testthat::test_file('test_funcs.R')"
-  - echo $
+  - make test
+  - echo $TRAVIS_TEST_RESULT
 after_success:
   - cd ..
   - Rscript -e 'covr::codecov()'
