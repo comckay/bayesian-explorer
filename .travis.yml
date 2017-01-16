@@ -27,7 +27,7 @@ addons:
 before_script:
   - cd tests/
 script:
-  - Rscript -e "x <- testthat::test_dir("dashboard/tests/") %>% data.frame() %>% .[["error"]] %>% any(); if (x == T) write("0", stderr())" 
+  - Rscript -e "library(magrittr); x <- testthat::test_dir("dashboard/tests/") %>% data.frame() %>% .[["error"]] %>% any(); if (x == T) write("0", stderr())" 
 after_success:
   - cd ..
   - Rscript -e 'covr::codecov()'
