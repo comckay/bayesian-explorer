@@ -32,8 +32,8 @@ betaPosterior <- function(prior.mean, prior.n, sample.n = "", affirm.n = "") {
   if (sample.n < affirm.n) {  # if sample.n is less than n affirming
     stop("sample.n < affirm.n")
   }
-  a = abs(affirm.n + (prior.n * prior.mean) - 1)
-  b = abs(sample.n - affirm.n + (prior.n * (1 - prior.mean)) - 1)
+  a = affirm.n + (prior.n * prior.mean) - 1
+  b = sample.n - affirm.n + (prior.n * (1 - prior.mean)) - 1
   domain = seq(0, 1, 0.005)
   val = dbeta(domain, a, b)
   data.frame("domain" = domain, 
