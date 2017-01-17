@@ -27,7 +27,7 @@ addons:
 before_script:
   - cd tests/
 script:
-  - Rscript -e "library(magrittr); error <- testthat::test_dir('.') %>% data.frame() %>% .[['error']]; if (any(error)){ print('error'); q(save = 'no', status = 1) }" 
+  - Rscript -e "library(magrittr); error <- testthat::test_dir('.') %>% data.frame() %>% .[['error']]; print(error); if (any(error)){ print('error'); q(save = 'no', status = 1) }" 
 after_success:
   - cd ..
   - Rscript -e 'covr::codecov()'
