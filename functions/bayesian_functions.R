@@ -10,8 +10,16 @@ betaVariance <- function(prior.mean, prior.n, sample.n = "", affirm.n = "", prio
   #   affirm.n = (only for posterior) name of vector containing the n affirming as character
   #   prior = boolean whether we are calculating the variance of a prior or posterior
   if (prior) {
+    if (!any(is.numeric(prior.mean) & is.numeric(prior.n))) {
+      stop("args must be numeric")
+    }
     prior.mean * (1 - prior.mean) / (1 + prior.n)
   } else {
+    if (!any(is.numeric(prior.mean) & is.numeric(prior.n) & is.numeric(affirm.n) & is.numeric(sample.n))) {
+      stop("args must be numeric")
+    } else if (affirm.n > sample.n) {
+      stop("affirm.n > sample.n")
+    }
     a = affirm.n + (prior.n * prior.mean) - 1
     b = sample.n - affirm.n + (prior.n * (1 - prior.mean)) - 1
     a * b / ((a + b)^2 * (a + b + 1))
