@@ -7,6 +7,7 @@ r:
 cache: packages
 r_packages:
    - shiny
+   - lintr
    - magrittr
    - ggplot2
    - openssl
@@ -15,7 +16,6 @@ r_packages:
    - shinydashboard
    - emdbook
    - testthat
-   - covr
 addons:
   apt:
     packages:
@@ -28,4 +28,7 @@ before_script:
   - cd tests/
 script:
   - Rscript -e "library(magrittr); error <- testthat::test_file('test_funcs.R') %>% data.frame() %>% dplyr::select(failed); if (sum(error$failed) > 0){ error %>% dplyr::filter(failed > 0) %>% print(); q(save = 'no', status = 1) }"
-  - Rscript -e "library(magrittr); error <- testthat::test_file('test_lint.R') %>% data.frame() %>% dplyr::select(failed); if (sum(error$failed) > 0){ error %>% dplyr::filter(failed > 0) %>% print(); q(save = 'no', status = 1) }" 
+  - cd ..
+  - Rscript -e "lintr::read_settings('.lintr')"
+  - cd tests/
+  - Rscript -e "library(magrittr); error <- testthat::test_file('test_lint.R') %>% data.frame() %>% dplyr::select(failed); if (sum(error$failed) > 0){ error %>% dplyr::filter(failed > 0) %>% print(); q(save = 'no', status = 1) }"
