@@ -5,7 +5,8 @@ Authors@R: person("Connor", "McKay", email = "mckayconnort@gmail.com",
                   role = c("aut", "cre"))
 Description: Shiny app to demonstrate bayesian inference using binomial likelihood and beta prior
 Depends: R (>= 3.1.0)
-License: magrittr
+License: MIT
+Suggests: lintr
 Imports:
   shiny,
   magrittr,
