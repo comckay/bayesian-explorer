@@ -1,0 +1,5 @@
+linters: with_defaults(line_length_linter(100), absolute_paths_linter(),
+                       closed_curly_linter(), commas_linter(),
+                       infix_spaces_linter(), snake_case_linter(),
+                       open_curly_linter(), single_quotes_linter(),
+                       spaces_left_parentheses_linter())
