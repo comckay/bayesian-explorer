@@ -1,4 +1,6 @@
 library(testthat)
+library(lintr)
+library(magrittr)
 
 if (requireNamespace("lintr", quietly = TRUE)) {
   context("lints")
