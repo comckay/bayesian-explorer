@@ -5,11 +5,16 @@ source("../functions/bayesian_functions.R")
 
 context("Bayesian Functions")
 
-x <- expand.grid(prior.mean = seq(.1, 1, by = .1),
-                 prior.n = seq(0, 100, by = 1),
-                 sample.n = seq(1, 100, by = 1),
-                 affirm.n = seq(0, 100, by = 1)) %>%
-  dplyr::filter(affirm.n <= sample.n)
+if (!file.exists("test_data/mean_sample_value_grid.RDS")) {
+  x <- expand.grid(prior.mean = seq(.1, 1, by = .1),
+                   prior.n = seq(0, 100, by = 1),
+                   sample.n = seq(1, 100, by = 1),
+                   affirm.n = seq(0, 100, by = 1)) %>%
+    dplyr::filter(affirm.n <= sample.n)
+    saveRDS(x, "test_data/mean_sample_value_grid.RDS")
+} else {
+  x <- readRDS("test_data/mean_sample_value_grid.RDS")
+}
 
 test_that("betaPosterior outputs the correct vector", {
   expect_equal_to_reference(betaPosterior(prior.mean = .5,
