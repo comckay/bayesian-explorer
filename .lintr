@@ -1,8 +1,12 @@
 linters: with_defaults(
-    trailing_whitespace_linter = NULL, # 12
-    camel_case_linter = NULL, # 9
-    line_length_linter(100),
-    snake_case_linter,
+    trailing_whitespace_linter = NULL,
+    trailing_blank_lines_linter = NULL,
+    assignment_linter = NULL,
+    multiple_dots_linter = NULL,
+    camel_case_linter = NULL,
+    line_length_linter(150),
+    object_length_linter(45),
+    snake_case_linter = NULL,
     absolute_paths_linter,
     closed_curly_linter,
     commas_linter,
@@ -11,3 +15,4 @@ linters: with_defaults(
     single_quotes_linter,
     spaces_left_parentheses_linter
   )
+exclusions: list("tests/test_funcs.R", "tests/test_lint.R")
