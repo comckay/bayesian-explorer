@@ -5,13 +5,15 @@ if (requireNamespace("lintr", quietly = TRUE)) {
   context("lints")
   test_that("Code is Lint Free", {
     x <- list.files(path = "../", pattern = ".R$",
-                    full.names = T, recursive = T) %>%
+                    full.names = T, recursive = T, include.dirs = T) %>%
       lapply(function(x) lintr::lint(x)) %>%
-      dplyr::select(filename, line_number, message)
-    print(x)
-    if (nrow(x) > 0) {
+      {
+        lint.count <<- purrr::map(., length)
+        return(.)
+      }
+    if (sum(unlist(x)) > 0) {
       print(c("Please lint and fix the following files:", unique(x$filename)))
     }
-    expect_equal(nrow(x), 0)
+    expect_equal(sum(unlist(x)), 0)
   })
 }

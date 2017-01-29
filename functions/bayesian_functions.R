@@ -16,7 +16,7 @@ betaVariance <- function(prior.mean, prior.n, sample.n = "", affirm.n = "", prio
     }
     prior.mean * (1 - prior.mean) / (1 + prior.n)
   } else {
-    if (!any(purrr::map(list(prior.mean, prior.n, affirm.n, sample.n), is.numeric ))) {
+    if (!any(is.numeric(prior.mean) & is.numeric(prior.n) & is.numeric(affirm.n) & is.numeric(sample.n))) {
       stop("args must be numeric")
     } else if (affirm.n > sample.n) {
       stop("affirm.n > sample.n")
