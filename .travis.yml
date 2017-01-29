@@ -31,5 +31,5 @@ before_script:
 script:
   - Rscript -e "library(magrittr); error <- testthat::test_file('test_funcs.R') %>% data.frame() %>% dplyr::select(failed); if (sum(error$failed) > 0){ error %>% dplyr::filter(failed > 0) %>% print(); q(save = 'no', status = 1) }"
   after_success:
-- Rscript -e "library(magrittr); error <- testthat::test_file('test_lint.R') %>% data.frame() %>% dplyr::select(failed); if (sum(error$failed) > 0){ error %>% dplyr::filter(failed > 0) %>% print(); q(save = 'no', status = 1) }"
-- Rscript -e "x <- covr::file_coverage(source_files = c('../functions/bayesian_functions.R'), test_files = c('test_funcs.R')); covr::codecov(coverage = x)"
+  - Rscript -e "library(magrittr); error <- testthat::test_file('test_lint.R') %>% data.frame() %>% dplyr::select(failed); if (sum(error$failed) > 0){ error %>% dplyr::filter(failed > 0) %>% print(); q(save = 'no', status = 1) }"
+  - Rscript -e "x <- covr::file_coverage(source_files = c('../functions/bayesian_functions.R'), test_files = c('test_funcs.R')); covr::codecov(coverage = x)"
