@@ -36,7 +36,9 @@ shinyUI(fluidPage(
                    value = 7,
                    min = 2,
                    max = 100000,
-                   step = 1)
+                   step = 1),
+      br(),
+     actionLink("see.code", label = h5(a("See the Code", href = "https://github.com/comckay/bayesian-explorer"), align = "center"))
     ),
 
     # Show a plot of the generated distribution
