@@ -43,8 +43,8 @@ betaPosterior <- function(prior.mean, prior.conc, sample.n = "", affirm.n = "") 
   }
   a = affirm.n + (prior.conc * prior.mean)
   b = sample.n - affirm.n + (prior.conc * (1 - prior.mean))
-  fix.constant = (gamma(a) * gamma(b) * gamma(affirm.n + 1) * gamma(sample.n - affirm.n + 1) * gamma(a + b + sample.n)) /
-    (gamma(sample.n + 1) * gamma(a + b) * gamma(a + affirm.n) * gamma(b - affirm.n + sample.n))
+  fix.constant = (gamma(sample.n + 1) * gamma(a + b) * gamma(a + affirm.n) * gamma(b - affirm.n + sample.n)) / 
+    (gamma(a) * gamma(b) * gamma(affirm.n + 1) * gamma(sample.n - affirm.n + 1) * gamma(a + b + sample.n))
   domain = seq(0, 1, 0.005)
   val = fix.constant * dbeta(domain, a, b)    
   data.frame("domain" = domain,
