@@ -6,8 +6,8 @@ shinyServer(function(input, output) {
   })
 
   prior <- reactive({
-    alpha = input$prior.mean * input$prior.n
-    beta = (1 - input$prior.mean) * input$prior.n
+    alpha = input$prior.mean * input$prior.conc
+    beta = (1 - input$prior.mean) * input$prior.conc
     domain = seq(0, 1, 0.005)
     val = dbeta(domain, alpha, beta)
     data.frame("domain" = domain,
@@ -18,7 +18,7 @@ shinyServer(function(input, output) {
     affirm.vec = affirm.vec()
     affirm.vec = affirm.vec[1:input$generative.n]
     betaPosterior(prior.mean = input$prior.mean,
-                  prior.n = input$prior.n,
+                  prior.conc = input$prior.conc,
                   affirm.n = sum(affirm.vec),
                   sample.n = input$generative.n)
   })
@@ -27,7 +27,7 @@ shinyServer(function(input, output) {
     affirm.vec = affirm.vec()
     affirm.vec = affirm.vec[1:input$generative.n]
     betaPosteriorMean(prior.mean = input$prior.mean,
-                      prior.n = input$prior.n,
+                      prior.conc = input$prior.conc,
                       affirm.n = sum(affirm.vec),
                       sample.n = input$generative.n)
   })
@@ -53,13 +53,13 @@ shinyServer(function(input, output) {
   beta.variance <- reactive({
     if (input$prior_posterior == "Prior") {
       betaVariance(prior.mean = input$prior.mean,
-                   prior.n = input$prior.n,
+                   prior.conc = input$prior.conc,
                    prior = T)
     } else {
       affirm.vec = affirm.vec()
       affirm.vec = affirm.vec[1:input$generative.n]
       betaVariance(prior.mean = input$prior.mean,
-                   prior.n = input$prior.n,
+                   prior.conc = input$prior.conc,
                    sample.n = input$generative.n,
                    affirm.n = sum(affirm.vec),
                    prior = F)
@@ -98,7 +98,7 @@ shinyServer(function(input, output) {
   })
 
   output$posterior.credint <- renderValueBox({
-    if (input$generative.n <= 3 & input$prior.n <= 3) {
+    if (input$generative.n <= 3 & input$prior.conc <= 3) {
       valueBox(value = "NA",
                subtitle = "95% Credible Interval",
                icon = icon("thumbs-up", lib = "glyphicon"),
@@ -128,7 +128,7 @@ shinyServer(function(input, output) {
       legend("right", c("Prior", "Sample Mean"),
              col = c("black", "black"),
              lty = c(1, 3))
-    } else if (input$generative.n <= 3 & input$prior.n <= 3) {
+    } else if (input$generative.n <= 3 & input$prior.conc <= 3) {
       posterior = posterior()
       posterior.mean = posterior.mean()
       sample.mean = sample.mean()
