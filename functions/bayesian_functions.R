@@ -27,38 +27,6 @@ betaVariance <- function(prior.mean, prior.conc, sample.n = "", affirm.n = "", p
   }
 }
 
-# possible approximation to factorial(), but still breaks down for large n
-#gosper <- function(n) {
-#  sqrt((2*n + (1/3))*pi) * (n^n) * exp(-n)
-#}
-
-betaPosteriorDensity <- function(a, b, n, k, domain) {
-  # Calculates the probability density values for the beta posterior (adjusted by appropriate constant).
-  # Args:
-  # a = (positive real number) beta shape parameter alpha
-  # b = (positive real number) beta shape parameter beta
-  # n = number of observations in the treatment population
-  # k = number of successes in the treatment population
-  # domain = ordered row vector containing points in the domain
-  beta.sum = 0
-  beta.dens = matrix(0, length(domain), 1)
-  
-  # While beta cdf max is less than 1, keep updating pdf of beta
-  for (i in 1:length(beta.dens)) {
-    # New constant: will need a better alternative to gamma for large parameter values
-    constant = choose(n, k) * ( gamma(a + b) * gamma(a + k) * gamma(b - k + n) /
-      ( gamma(a) * gamma(b) * gamma(a + b + n) ) )
-    
-    # beta.dens[i] = constant * x^(k + a - 1) * (1 - x)^(n - k + b - 1)
-    beta.dens[i] = constant * dbeta(domain[i], a, b)
-    beta.sum = beta.sum + beta.dens[i]
-    
-    if (beta.sum >= 1) {
-      beta.dens[i] = beta.sum - 1
-      return(beta.dens)
-    }
-  }
-}
 
 betaPosterior <- function(prior.mean, prior.conc, sample.n = "", affirm.n = "") {
   # calculates an approximate beta posterior given the mean and concentration k = (a + b) of a beta prior as well as
@@ -77,7 +45,7 @@ betaPosterior <- function(prior.mean, prior.conc, sample.n = "", affirm.n = "") 
   a = affirm.n + (prior.conc * prior.mean)
   b = sample.n - affirm.n + (prior.conc * (1 - prior.mean))
   domain = seq(0, 1, 0.005)
-  val = betaPosteriorDensity(a, b, sample.n, affirm.n, domain)  
+  val = dbeta(domain, a, b)
   data.frame("domain" = domain,
              "prob_dens" = val)
 }
